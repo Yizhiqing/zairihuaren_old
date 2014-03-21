@@ -1,3 +1,4 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="com.zairihuaren.mvc.model.User" %>
 <%@ page import="com.google.appengine.api.datastore.KeyFactory" %>
 <html>

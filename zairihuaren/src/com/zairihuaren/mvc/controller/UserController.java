@@ -9,10 +9,12 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+
 import com.zairihuaren.PMF;
 import com.zairihuaren.mvc.model.User;
 
@@ -21,22 +23,13 @@ import com.zairihuaren.mvc.model.User;
 public class UserController {
 
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
-	public String getAddCustomerPage(ModelMap model) {
-
+	public String getAddCustomerPage(@ModelAttribute("user") User user) {
 		return "userManagement/register";
 
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public ModelAndView add(HttpServletRequest request, ModelMap model) {
-
-		String name = request.getParameter("name");
-		String password = request.getParameter("password");
-		String email = request.getParameter("email");
-
-		User user = new User();
-		user.setName(name);
-		user.setEmail(email);
+	public String add(@ModelAttribute("user") User user, ModelMap model) {
 		user.setDate(new Date());
 
 		PersistenceManager pm = PMF.get().getPersistenceManager();
@@ -46,7 +39,7 @@ public class UserController {
 			pm.close();
 		}
 
-		return new ModelAndView("redirect:list");
+		return "redirect:list";
 
 	}
 
@@ -74,7 +67,7 @@ public class UserController {
 			pm.close();
 		}
 
-		return "update";
+		return "userManagement/update";
 
 	}
 
